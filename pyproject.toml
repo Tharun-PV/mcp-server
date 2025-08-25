@@ -1,4 +1,4 @@
-[project]
+ [project]
 name = "devrev-mcp"
 version = "0.4.2"
 description = "A MCP server project"
@@ -15,3 +15,8 @@ build-backend = "hatchling.build"
 
 [project.scripts]
 devrev-mcp = "devrev_mcp:main"
+ 
+[tool.poetry.dev-dependencies]
+pytest = "^8.0.0"
+coverage = "^7.0.0"
+responses = "^0.25.0"

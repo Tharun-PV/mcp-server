@@ -18,6 +18,7 @@ from .utils import make_devrev_request, make_internal_devrev_request
 
 server = Server("devrev_mcp")
 
+
 @server.list_tools()
 async def handle_list_tools() -> list[types.Tool]:
     """
@@ -40,8 +41,8 @@ async def handle_list_tools() -> list[types.Tool]:
                         "type": "string",
                         "description": "The DevRev ID of the vista"
                     }
-                 },
-                 "required": ["id"]
+                },
+                "required": ["id"]
             },
         ),
         types.Tool(
@@ -52,7 +53,7 @@ async def handle_list_tools() -> list[types.Tool]:
                 "properties": {
                     "query": {"type": "string"},
                     "namespace": {
-                        "type": "string", 
+                        "type": "string",
                         "enum": ["article", "issue", "ticket", "part", "dev_user", "account", "rev_org", "vista", "incident"],
                         "description": "The namespace to search in. Use this to specify the type of object to search for."
                     },
@@ -146,11 +147,11 @@ async def handle_list_tools() -> list[types.Tool]:
                     "sort_by": {"type": "array", "items": {"type": "string", "enum": ["target_start_date:asc", "target_start_date:desc", "target_close_date:asc", "target_close_date:desc", "actual_start_date:asc", "actual_start_date:desc", "actual_close_date:asc", "actual_close_date:desc", "created_date:asc", "created_date:desc"]}, "description": "The field (and the order) to sort the works by, in the sequence of the array elements"},
                     "rev_orgs": {"type": "array", "items": {"type": "string"}, "description": "The rev_org IDs of the customer rev_orgs filter on Issues and Tickets to list. Use this filter for issues and tickets that are related to a customer rev_org."},
                     "target_close_date": {
-                        "type": "object", 
+                        "type": "object",
                         "properties": {
                             "after": {"type": "string", "description": "The start date of the target close date range, for example: 2025-06-03T00:00:00Z"},
                             "before": {"type": "string", "description": "The end date of the target close date range, for example: 2025-06-03T00:00:00Z"},
-                        }, 
+                        },
                         "required": ["after", "before"]
                     },
                     "target_start_date": {
@@ -158,7 +159,7 @@ async def handle_list_tools() -> list[types.Tool]:
                         "properties": {
                             "after": {"type": "string", "description": "The start date of the target start date range, for example: 2025-06-03T00:00:00Z"},
                             "before": {"type": "string", "description": "The end date of the target start date range, for example: 2025-06-03T00:00:00Z"},
-                        }, 
+                        },
                         "description": "The target start date range can only be used for issues. Do not use this field for tickets.",
                         "required": ["after", "before"]
                     },
@@ -167,7 +168,7 @@ async def handle_list_tools() -> list[types.Tool]:
                         "properties": {
                             "after": {"type": "string", "description": "The start date of the actual close date range, for example: 2025-06-03T00:00:00Z"},
                             "before": {"type": "string", "description": "The end date of the actual close date range, for example: 2025-06-03T00:00:00Z"},
-                        }, 
+                        },
                         "required": ["after", "before"]
                     },
                     "actual_start_date": {
@@ -175,7 +176,7 @@ async def handle_list_tools() -> list[types.Tool]:
                         "properties": {
                             "after": {"type": "string", "description": "The start date of the actual start date range, for example: 2025-06-03T00:00:00Z"},
                             "before": {"type": "string", "description": "The end date of the actual start date range, for example: 2025-06-03T00:00:00Z"},
-                        }, 
+                        },
                         "description": "The actual start date range can only be used for issues. Do not use this field for tickets.",
                         "required": ["after", "before"]
                     },
@@ -184,7 +185,7 @@ async def handle_list_tools() -> list[types.Tool]:
                         "properties": {
                             "after": {"type": "string", "description": "The start date of the created date range, for example: 2025-06-03T00:00:00Z"},
                             "before": {"type": "string", "description": "The end date of the created date range, for example: 2025-06-03T00:00:00Z"},
-                        }, 
+                        },
                         "required": ["after", "before"]
                     },
                     "modified_date": {
@@ -192,7 +193,7 @@ async def handle_list_tools() -> list[types.Tool]:
                         "properties": {
                             "after": {"type": "string", "description": "The start date of the modified date range, for example: 2025-06-03T00:00:00Z"},
                             "before": {"type": "string", "description": "The end date of the modified date range, for example: 2025-06-03T00:00:00Z"},
-                        }, 
+                        },
                         "required": ["after", "before"]
                     },
                     "sprint": {
@@ -296,7 +297,7 @@ async def handle_list_tools() -> list[types.Tool]:
                         "properties": {
                             "after": {"type": "string", "description": "The start date of the target close date range, for example: 2025-06-03T00:00:00Z"},
                             "before": {"type": "string", "description": "The end date of the target close date range, for example: 2025-06-03T00:00:00Z"},
-                        }, 
+                        },
                         "required": ["after", "before"]
                     },
                     "target_start_date": {
@@ -304,7 +305,7 @@ async def handle_list_tools() -> list[types.Tool]:
                         "properties": {
                             "after": {"type": "string", "description": "The start date of the target start date range, for example: 2025-06-03T00:00:00Z"},
                             "before": {"type": "string", "description": "The end date of the target start date range, for example: 2025-06-03T00:00:00Z"},
-                        }, 
+                        },
                         "required": ["after", "before"]
                     },
                     "actual_close_date": {
@@ -312,7 +313,7 @@ async def handle_list_tools() -> list[types.Tool]:
                         "properties": {
                             "after": {"type": "string", "description": "The start date of the actual close date range, for example: 2025-06-03T00:00:00Z"},
                             "before": {"type": "string", "description": "The end date of the actual close date range, for example: 2025-06-03T00:00:00Z"},
-                        }, 
+                        },
                         "required": ["after", "before"]
                     },
                     "actual_start_date": {
@@ -320,7 +321,7 @@ async def handle_list_tools() -> list[types.Tool]:
                         "properties": {
                             "after": {"type": "string", "description": "The start date of the actual start date range, for example: 2025-06-03T00:00:00Z"},
                             "before": {"type": "string", "description": "The end date of the actual start date range, for example: 2025-06-03T00:00:00Z"},
-                        }, 
+                        },
                         "required": ["after", "before"]
                     },
                 },
@@ -471,6 +472,7 @@ async def handle_list_tools() -> list[types.Tool]:
         )
     ]
 
+
 @server.call_tool()
 async def handle_call_tool(
     name: str, arguments: dict | None
@@ -500,7 +502,7 @@ async def handle_call_tool(
                 text=f"Current DevRev user details: {response.json()}"
             )
         ]
-    
+
     elif name == "get_vista":
         if not arguments:
             raise ValueError("Missing arguments")
@@ -508,14 +510,14 @@ async def handle_call_tool(
         id = arguments.get("id")
         if not id:
             raise ValueError("Missing id ")
-            
+
         response = make_internal_devrev_request(
             "vistas.get",
             {
                 "id": id
             }
         )
-        
+
         if response.status_code != 200:
             error_text = response.text
             return [
@@ -524,14 +526,13 @@ async def handle_call_tool(
                     text=f"get_vista failed with status {response.status_code}: {error_text}"
                 )
             ]
-        
+
         return [
             types.TextContent(
                 type="text",
                 text=f"Vista details for '{id}':\n{response.json()}"
             )
         ]
-    
 
     elif name == "search":
         if not arguments:
@@ -540,7 +541,7 @@ async def handle_call_tool(
         query = arguments.get("query")
         if not query:
             raise ValueError("Missing query parameter")
-        
+
         namespace = arguments.get("namespace")
         if not namespace:
             raise ValueError("Missing namespace parameter")
@@ -548,7 +549,7 @@ async def handle_call_tool(
         response = make_devrev_request(
             "search.hybrid",
             {
-                "query": query, 
+                "query": query,
                 "namespace": namespace
             }
         )
@@ -560,7 +561,7 @@ async def handle_call_tool(
                     text=f"Search failed with status {response.status_code}: {error_text}"
                 )
             ]
-        
+
         search_results = response.json()
         return [
             types.TextContent(
@@ -575,7 +576,7 @@ async def handle_call_tool(
         id = arguments.get("id")
         if not id:
             raise ValueError("Missing id parameter")
-        
+
         response = make_devrev_request(
             "works.get",
             {
@@ -590,7 +591,7 @@ async def handle_call_tool(
                     text=f"Get object failed with status {response.status_code}: {error_text}"
                 )
             ]
-        
+
         return [
             types.TextContent(
                 type="text",
@@ -635,24 +636,28 @@ async def handle_call_tool(
                 )
             ]
 
+        try:
+            resp_json = response.json()
+        except Exception:
+            resp_json = {}
         return [
             types.TextContent(
                 type="text",
-                text=f"Object created successfully: {response.json()}"
+                text=f"Object created successfully: {resp_json}"
             )
         ]
-    
+
     elif name == "update_work":
         if not arguments:
             raise ValueError("Missing arguments")
-        
+
         payload = {}
 
         id = arguments.get("id")
         if not id:
             raise ValueError("Missing id parameter")
         payload["id"] = id
-        
+
         type = arguments.get("type")
         if not type:
             raise ValueError("Missing type parameter")
@@ -689,9 +694,11 @@ async def handle_call_tool(
         subtype = arguments.get("subtype")
         if subtype:
             if subtype["drop"]:
-                payload["custom_schema_spec"] = {"drop": {"subtype": True}, "tenant_fragment": True, "validate_required_fields": True}
+                payload["custom_schema_spec"] = {"drop": {
+                    "subtype": True}, "tenant_fragment": True, "validate_required_fields": True}
             else:
-                payload["custom_schema_spec"] = {"subtype": subtype["subtype"], "tenant_fragment": True, "validate_required_fields": True}
+                payload["custom_schema_spec"] = {
+                    "subtype": subtype["subtype"], "tenant_fragment": True, "validate_required_fields": True}
 
         response = make_devrev_request(
             "works.update",
@@ -706,7 +713,7 @@ async def handle_call_tool(
                     text=f"Update object failed with status {response.status_code}: {error_text}"
                 )
             ]
-        
+
         return [
             types.TextContent(
                 type="text",
@@ -717,7 +724,7 @@ async def handle_call_tool(
         payload = {}
         payload["issue"] = {}
         payload["ticket"] = {}
-        
+
         type = arguments.get("type")
         if not type:
             raise ValueError("Missing type parameter")
@@ -752,12 +759,14 @@ async def handle_call_tool(
         if custom_fields:
             payload["custom_fields"] = {}
             for custom_field in custom_fields:
-                payload["custom_fields"]["tnt__" + custom_field["name"]] = custom_field["value"]
+                payload["custom_fields"]["tnt__" +
+                                         custom_field["name"]] = custom_field["value"]
 
         sla_summary = arguments.get("sla_summary")
         if sla_summary:
-            payload["issue"]["sla_summary"] = {"target_time": {"type": "range", "after": sla_summary["after"], "before": sla_summary["before"]}}
-        
+            payload["issue"]["sla_summary"] = {"target_time": {
+                "type": "range", "after": sla_summary["after"], "before": sla_summary["before"]}}
+
         sort_by = arguments.get("sort_by")
         if sort_by:
             payload["sort_by"] = sort_by
@@ -774,35 +783,41 @@ async def handle_call_tool(
         if subtype:
             if 'ticket' in type:
                 payload["ticket"]["subtype"] = subtype
-            
+
             if 'issue' in type:
                 payload["issue"]["subtype"] = subtype
 
         target_close_date = arguments.get("target_close_date")
         if target_close_date:
-            payload["target_close_date"] = {"type": "range", "after": target_close_date["after"], "before": target_close_date["before"]}
-        
+            payload["target_close_date"] = {
+                "type": "range", "after": target_close_date["after"], "before": target_close_date["before"]}
+
         target_start_date = arguments.get("target_start_date")
         if target_start_date:
             if 'issue' in type:
-                payload["issue"]["target_start_date"] = {"type": "range", "after": target_start_date["after"], "before": target_start_date["before"]}
+                payload["issue"]["target_start_date"] = {
+                    "type": "range", "after": target_start_date["after"], "before": target_start_date["before"]}
 
         actual_close_date = arguments.get("actual_close_date")
         if actual_close_date:
-            payload["actual_close_date"] = {"type": "range", "after": actual_close_date["after"], "before": actual_close_date["before"]}
+            payload["actual_close_date"] = {
+                "type": "range", "after": actual_close_date["after"], "before": actual_close_date["before"]}
 
         actual_start_date = arguments.get("actual_start_date")
         if actual_start_date:
             if 'issue' in type:
-                payload["issue"]["actual_start_date"] = {"type": "range", "after": actual_start_date["after"], "before": actual_start_date["before"]}
+                payload["issue"]["actual_start_date"] = {
+                    "type": "range", "after": actual_start_date["after"], "before": actual_start_date["before"]}
 
         created_date = arguments.get("created_date")
         if created_date:
-            payload["created_date"] = {"type": "range", "after": created_date["after"], "before": created_date["before"]}
+            payload["created_date"] = {
+                "type": "range", "after": created_date["after"], "before": created_date["before"]}
 
         modified_date = arguments.get("modified_date")
         if modified_date:
-            payload["modified_date"] = {"type": "range", "after": modified_date["after"], "before": modified_date["before"]}
+            payload["modified_date"] = {
+                "type": "range", "after": modified_date["after"], "before": modified_date["before"]}
 
         sprint = arguments.get("sprint")
         if sprint:
@@ -840,7 +855,7 @@ async def handle_call_tool(
         id = arguments.get("id")
         if not id:
             raise ValueError("Missing id parameter")
-        
+
         response = make_devrev_request(
             "parts.get",
             {
@@ -856,7 +871,7 @@ async def handle_call_tool(
                     text=f"Get part failed with status {response.status_code}: {error_text}"
                 )
             ]
-        
+
         return [
             types.TextContent(
                 type="text",
@@ -906,7 +921,7 @@ async def handle_call_tool(
                     text=f"Create part failed with status {response.status_code}: {error_text}"
                 )
             ]
-        
+
         return [
             types.TextContent(
                 type="text",
@@ -936,7 +951,7 @@ async def handle_call_tool(
         owned_by = arguments.get("owned_by")
         if owned_by:
             payload["owned_by"] = owned_by
-        
+
         description = arguments.get("description")
         if description:
             payload["description"] = description
@@ -966,7 +981,7 @@ async def handle_call_tool(
                     text=f"Update part failed with status {response.status_code}: {error_text}"
                 )
             ]
-        
+
         return [
             types.TextContent(
                 type="text",
@@ -984,56 +999,60 @@ async def handle_call_tool(
         if not type:
             raise ValueError("Missing type parameter")
         payload["type"] = type
-        
+
         cursor = arguments.get("cursor")
         if cursor:
             payload["cursor"] = cursor["next_cursor"]
             payload["mode"] = cursor["mode"]
-        
+
         owned_by = arguments.get("owned_by")
         if owned_by:
             payload["owned_by"] = owned_by
-        
+
         parent_part = arguments.get("parent_part")
         if parent_part:
             payload["parent_part"] = {"parts": parent_part}
-        
+
         created_by = arguments.get("created_by")
         if created_by:
             payload["created_by"] = created_by
-        
+
         modified_by = arguments.get("modified_by")
         if modified_by:
             payload["modified_by"] = modified_by
-        
+
         sort_by = arguments.get("sort_by")
         if sort_by:
             payload["sort_by"] = sort_by
-        
+
         accounts = arguments.get("accounts")
         if accounts:
             if 'enhancement' in type:
                 payload["enhancement"]["accounts"] = accounts
-        
+
         target_close_date = arguments.get("target_close_date")
         if target_close_date:
             if 'enhancement' in type:
-                payload["enhancement"]["target_close_date"] = {"after": target_close_date["after"], "before": target_close_date["before"]}
-        
+                payload["enhancement"]["target_close_date"] = {
+                    "after": target_close_date["after"], "before": target_close_date["before"]}
+
         target_start_date = arguments.get("target_start_date")
         if target_start_date:
             if 'enhancement' in type:
-                payload["enhancement"]["target_start_date"] = {"after": target_start_date["after"], "before": target_start_date["before"]}
+                payload["enhancement"]["target_start_date"] = {
+                    "after": target_start_date["after"], "before": target_start_date["before"]}
 
         actual_close_date = arguments.get("actual_close_date")
         if actual_close_date:
             if 'enhancement' in type:
-                payload["enhancement"]["actual_close_date"] = {"after": actual_close_date["after"], "before": actual_close_date["before"]}
-        
+                payload["enhancement"]["actual_close_date"] = {
+                    "after": actual_close_date["after"], "before": actual_close_date["before"]}
+
         actual_start_date = arguments.get("actual_start_date")
         if actual_start_date:
             if 'enhancement' in type:
-                payload["enhancement"]["actual_start_date"] = {"after": actual_start_date["after"], "before": actual_start_date["before"]}
+                payload["enhancement"]["actual_start_date"] = {
+                    "after": actual_start_date["after"], "before": actual_start_date["before"]}
 
         if payload["enhancement"] == {}:
             payload.pop("enhancement")
@@ -1042,7 +1061,7 @@ async def handle_call_tool(
             "parts.list",
             payload
         )
-        
+
         if response.status_code != 200:
             error_text = response.text
             return [
@@ -1051,7 +1070,7 @@ async def handle_call_tool(
                     text=f"List parts failed with status {response.status_code}: {error_text}"
                 )
             ]
-        
+
         return [
             types.TextContent(
                 type="text",
@@ -1063,7 +1082,7 @@ async def handle_call_tool(
             arguments = {}
 
         payload = {}
-        
+
         channel = arguments.get("channel")
         if channel:
             payload["channel"] = channel
@@ -1074,7 +1093,8 @@ async def handle_call_tool(
 
         created_date = arguments.get("created_date")
         if created_date:
-            payload["created_date"] = {"type": "range", "after": created_date["after"], "before": created_date["before"]}
+            payload["created_date"] = {
+                "type": "range", "after": created_date["after"], "before": created_date["before"]}
 
         cursor = arguments.get("cursor")
         if cursor:
@@ -1083,7 +1103,8 @@ async def handle_call_tool(
 
         ended_date = arguments.get("ended_date")
         if ended_date:
-            payload["ended_date"] = {"type": "range", "after": ended_date["after"], "before": ended_date["before"]}
+            payload["ended_date"] = {
+                "type": "range", "after": ended_date["after"], "before": ended_date["before"]}
 
         external_ref = arguments.get("external_ref")
         if external_ref:
@@ -1099,7 +1120,8 @@ async def handle_call_tool(
 
         modified_date = arguments.get("modified_date")
         if modified_date:
-            payload["modified_date"] = {"type": "range", "after": modified_date["after"], "before": modified_date["before"]}
+            payload["modified_date"] = {
+                "type": "range", "after": modified_date["after"], "before": modified_date["before"]}
 
         organizer = arguments.get("organizer")
         if organizer:
@@ -1107,7 +1129,8 @@ async def handle_call_tool(
 
         scheduled_date = arguments.get("scheduled_date")
         if scheduled_date:
-            payload["scheduled_date"] = {"type": "range", "after": scheduled_date["after"], "before": scheduled_date["before"]}
+            payload["scheduled_date"] = {
+                "type": "range", "after": scheduled_date["after"], "before": scheduled_date["before"]}
 
         sort_by = arguments.get("sort_by")
         if sort_by:
@@ -1157,7 +1180,7 @@ async def handle_call_tool(
         leaf_type = None
         subtype = None
 
-        if(type == "issue" or type == "ticket"):
+        if (type == "issue" or type == "ticket"):
             response = make_devrev_request(
                 "works.get",
                 {
@@ -1173,12 +1196,13 @@ async def handle_call_tool(
                         text=f"Get work item failed with status {response.status_code}: {error_text}"
                     )
                 ]
-            
-            current_stage_id = response.json().get("work", {}).get("stage", {}).get("stage", {}).get("id", {})
+
+            current_stage_id = response.json().get("work", {}).get(
+                "stage", {}).get("stage", {}).get("id", {})
             leaf_type = response.json().get("work", {}).get("type", {})
             subtype = response.json().get("work", {}).get("subtype", {})
 
-        elif(type == "enhancement"):
+        elif (type == "enhancement"):
             response = make_devrev_request(
                 "parts.get",
                 {
@@ -1195,21 +1219,22 @@ async def handle_call_tool(
                     )
                 ]
 
-            current_stage_id = response.json().get("part", {}).get("stage_v2", {}).get("stage", {}).get("id", {})
+            current_stage_id = response.json().get("part", {}).get(
+                "stage_v2", {}).get("stage", {}).get("id", {})
             leaf_type = response.json().get("part", {}).get("type", {})
             subtype = response.json().get("part", {}).get("subtype", {})
         else:
             raise ValueError("Invalid type parameter")
-        
-        if(current_stage_id == {} or leaf_type == {}):
+
+        if (current_stage_id == {} or leaf_type == {}):
             raise ValueError("Could not get current stage or leaf type")
-        
+
         schema_payload = {}
-        if(leaf_type != {}):
+        if (leaf_type != {}):
             schema_payload["leaf_type"] = leaf_type
-        if(subtype != {}):
+        if (subtype != {}):
             schema_payload["custom_schema_spec"] = {"subtype": subtype}
-        
+
         schema_response = make_devrev_request(
             "schemas.aggregated.get",
             schema_payload
@@ -1223,11 +1248,12 @@ async def handle_call_tool(
                     text=f"Get schema failed with status {schema_response.status_code}: {error_text}"
                 )
             ]
-        
-        stage_diagram_id = schema_response.json().get("schema", {}).get("stage_diagram_id", {}).get("id", {})
+
+        stage_diagram_id = schema_response.json().get(
+            "schema", {}).get("stage_diagram_id", {}).get("id", {})
         if stage_diagram_id == None:
             raise ValueError("Could not get stage diagram id")
-        
+
         stage_transitions_response = make_devrev_request(
             "stage-diagrams.get",
             {"id": stage_diagram_id}
@@ -1242,7 +1268,8 @@ async def handle_call_tool(
                 )
             ]
 
-        stages = stage_transitions_response.json().get("stage_diagram", {}).get("stages", [])
+        stages = stage_transitions_response.json().get(
+            "stage_diagram", {}).get("stages", [])
         for stage in stages:
             if stage.get("stage", {}).get("id") == current_stage_id:
                 transitions = stage.get("transitions", [])
@@ -1274,7 +1301,7 @@ async def handle_call_tool(
         if not timeline_entry:
             raise ValueError("Missing timeline_entry parameter")
         payload["body"] = timeline_entry
-        
+
         timeline_response = make_devrev_request(
             "timeline-entries.create",
             payload
@@ -1287,7 +1314,7 @@ async def handle_call_tool(
                     text=f"Create timeline entry failed with status {timeline_response.status_code}: {error_text}"
                 )
             ]
-        
+
         return [
             types.TextContent(
                 type="text",
@@ -1322,7 +1349,7 @@ async def handle_call_tool(
                     text=f"Get sprints failed with status {response.status_code}: {error_text}"
                 )
             ]
-        
+
         sprints = response.json().get("vista_group", [])
         return [
             types.TextContent(
@@ -1335,7 +1362,7 @@ async def handle_call_tool(
             raise ValueError("Missing arguments")
 
         payload = {}
-        
+
         leaf_type = arguments.get("leaf_type")
         if not leaf_type:
             raise ValueError("Missing leaf_type parameter")
@@ -1354,7 +1381,7 @@ async def handle_call_tool(
                     text=f"List subtypes failed with status {response.status_code}: {error_text}"
                 )
             ]
-    
+
         return [
             types.TextContent(
                 type="text",
@@ -1363,6 +1390,7 @@ async def handle_call_tool(
         ]
     else:
         raise ValueError(f"Unknown tool: {name}")
+
 
 async def main():
     # Run the server using stdin/stdout streams
@@ -1379,3 +1407,10 @@ async def main():
                 ),
             ),
         )
+
+# Main entry point for CLI and integration tests
+if __name__ == "__main__":
+    import sys
+    import asyncio
+    asyncio.run(main())
+    sys.stdout.flush()
