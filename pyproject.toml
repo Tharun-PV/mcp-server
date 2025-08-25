@@ -6,6 +6,11 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [ "mcp>=1.0.0", "requests"]
 dependencies = [ "mcp>=1.0.0", "requests", "devrev-mcp"]
+dependencies = [
+	"mcp>=1.0.0",
+	"requests",
+	"devrev-mcp"
+]
 [[project.authors]]
 name = "Sunil Pandey"
 email = "sunil.pandey@devrev.ai"
