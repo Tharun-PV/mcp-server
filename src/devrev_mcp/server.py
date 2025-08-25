@@ -9,11 +9,11 @@ import asyncio
 import os
 import requests
 
-from mcp.server.models import InitializationOptions
+from devrev_mcp.server.models import InitializationOptions
 import mcp.types as types
-from mcp.server import NotificationOptions, Server
+from devrev_mcp.server import NotificationOptions, Server
 from pydantic import AnyUrl
-import mcp.server.stdio
+import devrev_mcp.server.stdio
 from .utils import make_devrev_request, make_internal_devrev_request
 
 server = Server("devrev_mcp")
@@ -1394,7 +1394,7 @@ async def handle_call_tool(
 
 async def main():
     # Run the server using stdin/stdout streams
-    async with mcp.server.stdio.stdio_server() as (read_stream, write_stream):
+    async with devrev_mcp.server.stdio.stdio_server() as (read_stream, write_stream):
         await server.run(
             read_stream,
             write_stream,
