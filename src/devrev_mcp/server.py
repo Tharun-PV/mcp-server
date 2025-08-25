@@ -636,8 +636,15 @@ async def handle_call_tool(
                 )
             ]
 
+        import json
         try:
             resp_json = response.json()
+        except json.JSONDecodeError:
+            if response.text.strip() == "":
+                resp_json = {}
+            else:
+                resp_json = {"error": "Malformed response",
+                             "raw": response.text}
         except Exception:
             resp_json = {}
         return [
