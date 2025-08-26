@@ -654,7 +654,7 @@ async def handle_call_tool(
             ]
         try:
             json_data = response.json()
-        except (RequestsJSONDecodeError, StdJSONDecodeError):
+        except (RequestsJSONDecodeError, StdJSONDecodeError, ValueError):
             raw_text = getattr(response, 'text', '') or ''
             if not raw_text.strip():
                 json_data = {}
