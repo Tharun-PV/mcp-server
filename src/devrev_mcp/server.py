@@ -649,23 +649,12 @@ async def handle_call_tool(
                     text=f"Create object failed with status {response.status_code}: {error_text}"
                 )
             ]
-        # Safely parse JSON result and format using repr to match test expectations
-        result_data = safe_json(response)
+        # Safely parse JSON result using utility
+        response_data = safe_json(response)
         return [
             types.TextContent(
                 type="text",
-                text=f"Object created successfully: {result_data}"
-            )
-        ]
-
-        try:
-            resp_json = response.json()
-        except Exception:
-            resp_json = {}
-        return [
-            types.TextContent(
-                type="text",
-                text=f"Object created successfully: {resp_json}"
+                text=f"Object created successfully: {response_data}"
             )
         ]
 
