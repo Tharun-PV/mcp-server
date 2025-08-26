@@ -18,6 +18,9 @@ from pydantic import AnyUrl
 import mcp.server.stdio
 from .utils import make_devrev_request, make_internal_devrev_request
 
+from requests.exceptions import JSONDecodeError as RequestsJSONDecodeError
+from json import JSONDecodeError as StdJSONDecodeError
+
 
 def safe_json(response: Any) -> Dict[str, Any]:
     """Return parsed JSON from a response-like object, but never raise an exception."""
@@ -649,12 +652,19 @@ async def handle_call_tool(
                     text=f"Create object failed with status {response.status_code}: {error_text}"
                 )
             ]
-        # Safely parse JSON result using utility
-        response_data = safe_json(response)
+        try:
+            json_data = response.json()
+        except (RequestsJSONDecodeError, StdJSONDecodeError):
+            raw_text = getattr(response, 'text', '') or ''
+            if not raw_text.strip():
+                json_data = {}
+            else:
+                json_data = {'error': 'Malformed response', 'raw': raw_text}
+
         return [
             types.TextContent(
                 type="text",
-                text=f"Object created successfully: {response_data}"
+                text=f"Object created successfully: {json_data}"
             )
         ]
 
