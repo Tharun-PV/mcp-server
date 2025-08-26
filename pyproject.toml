@@ -6,8 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
 	"mcp>=1.0.0",
-	"requests",
-	"devrev-mcp"
+	"requests"
 ]
 [[project.authors]]
 name = "Sunil Pandey"
