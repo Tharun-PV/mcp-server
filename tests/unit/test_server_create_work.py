@@ -88,7 +88,8 @@ async def test_handle_call_tool_create_work_empty_response():
         responses.POST,
         "https://api.devrev.ai/works.create",
         body="",
-        status=201
+        status=201,
+        content_type="application/json"
     )
     result = await server.handle_call_tool(
         name="create_work",
@@ -100,7 +101,8 @@ async def test_handle_call_tool_create_work_empty_response():
             "owned_by": ["user_1"]
         }
     )
-    assert any("Object created successfully" in c.text for c in result)
+    # Expect fallback to empty dict
+    assert any("Object created successfully: {}" in c.text for c in result)
 
 
 @responses.activate
@@ -110,9 +112,9 @@ async def test_handle_call_tool_create_work_malformed_response():
         responses.POST,
         "https://api.devrev.ai/works.create",
         body="not a json",
-        status=201
+        status=201,
+        content_type="application/json"
     )
-    # Should not raise, but may return a text error or empty dict
     result = await server.handle_call_tool(
         name="create_work",
         arguments={
@@ -123,7 +125,9 @@ async def test_handle_call_tool_create_work_malformed_response():
             "owned_by": ["user_1"]
         }
     )
-    assert any("Object created successfully" in c.text for c in result)
+    # Expect fallback to error dict
+    assert any("Object created successfully: {'error': 'Malformed response', 'raw': 'not a json'}" in c.text.replace(
+        '"', "'") for c in result)
 
 
 @responses.activate

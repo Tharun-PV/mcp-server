@@ -23,10 +23,18 @@ def test_mcp_server_protocol(monkeypatch):
     monkeypatch.setattr(utils, "make_internal_devrev_request", dummy_response)
 
     env = os.environ.copy()
-    env["PYTHONPATH"] = os.getcwd()
+    # Ensure the subprocess can import the local package by pointing PYTHONPATH
+    # at the repository's `src` directory (works reliably on Windows).
+    env["PYTHONPATH"] = os.path.abspath(os.path.join(os.getcwd(), "src"))
+    # Let the subprocess use the test-mode dummy responses from utils
+    env["MCP_TEST_MODE"] = "1"
+    env["DEVREV_API_KEY"] = "dummy_key"
+    # Suppress Python warnings to keep stdout clean
+    env["PYTHONWARNINGS"] = "ignore"
 
+    # Directly import and run the module to avoid module import issues
     proc = subprocess.Popen(
-        [sys.executable, "-m", "src.devrev_mcp.server"],
+        [sys.executable, "-c", "import devrev_mcp; devrev_mcp.main()"],
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,

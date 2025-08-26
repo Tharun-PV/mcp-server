@@ -23,6 +23,7 @@ async def test_handle_call_tool_valid_stage_transition_schema_error(monkeypatch)
         if endpoint == "works.get":
             class Resp:
                 status_code = 200
+                text = '{"work": {"stage": {"stage": {"id": "stage_1"}}, "type": "issue", "subtype": "subtype_1"}}'
 
                 def json(self):
                     return {"work": {"stage": {"stage": {"id": "stage_1"}}, "type": "issue", "subtype": "subtype_1"}}
@@ -49,6 +50,7 @@ async def test_handle_call_tool_valid_stage_transition_stage_diagram_error(monke
         if endpoint == "works.get":
             class Resp:
                 status_code = 200
+                text = '{"work": {"stage": {"stage": {"id": "stage_1"}}, "type": "issue", "subtype": "subtype_1"}}'
 
                 def json(self):
                     return {"work": {"stage": {"stage": {"id": "stage_1"}}, "type": "issue", "subtype": "subtype_1"}}
@@ -56,6 +58,7 @@ async def test_handle_call_tool_valid_stage_transition_stage_diagram_error(monke
         elif endpoint == "schemas.aggregated.get":
             class Resp:
                 status_code = 200
+                text = '{"schema": {"stage_diagram_id": {"id": "diagram_1"}}}'
 
                 def json(self):
                     return {"schema": {"stage_diagram_id": {"id": "diagram_1"}}}
@@ -83,6 +86,7 @@ async def test_handle_call_tool_valid_stage_transition_no_transitions(monkeypatc
         if endpoint == "works.get":
             class Resp:
                 status_code = 200
+                text = '{"work": {"stage": {"stage": {"id": "stage_1"}}, "type": "issue", "subtype": "subtype_1"}}'
 
                 def json(self):
                     return {"work": {"stage": {"stage": {"id": "stage_1"}}, "type": "issue", "subtype": "subtype_1"}}
@@ -90,6 +94,7 @@ async def test_handle_call_tool_valid_stage_transition_no_transitions(monkeypatc
         elif endpoint == "schemas.aggregated.get":
             class Resp:
                 status_code = 200
+                text = '{"schema": {"stage_diagram_id": {"id": "diagram_1"}}}'
 
                 def json(self):
                     return {"schema": {"stage_diagram_id": {"id": "diagram_1"}}}
@@ -97,6 +102,7 @@ async def test_handle_call_tool_valid_stage_transition_no_transitions(monkeypatc
         elif endpoint == "stage-diagrams.get":
             class Resp:
                 status_code = 200
+                text = '{"stage_diagram": {"stages": [{"stage": {"id": "other_stage"}, "transitions": ["to_stage_2"]}]}}'
 
                 def json(self):
                     return {"stage_diagram": {"stages": [{"stage": {"id": "other_stage"}, "transitions": ["to_stage_2"]}]}}

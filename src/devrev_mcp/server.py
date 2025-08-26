@@ -8,13 +8,27 @@ This module implements the MCP server for DevRev integration.
 import asyncio
 import os
 import requests
+import json
+from typing import Any, Dict
 
-from devrev_mcp.server.models import InitializationOptions
+from mcp.server.models import InitializationOptions
 import mcp.types as types
-from devrev_mcp.server import NotificationOptions, Server
+from mcp.server import NotificationOptions, Server
 from pydantic import AnyUrl
-import devrev_mcp.server.stdio
+import mcp.server.stdio
 from .utils import make_devrev_request, make_internal_devrev_request
+
+
+def safe_json(response: Any) -> Dict[str, Any]:
+    """Return parsed JSON from a response-like object, but never raise an exception."""
+    text = getattr(response, "text", "")
+    if not isinstance(text, str) or text.strip() == "":
+        return {}
+    try:
+        return json.loads(text)
+    except Exception:
+        return {"error": "Malformed response", "raw": text}
+
 
 server = Server("devrev_mcp")
 
@@ -635,16 +649,17 @@ async def handle_call_tool(
                     text=f"Create object failed with status {response.status_code}: {error_text}"
                 )
             ]
+        # Format the JSON result explicitly to ensure valid JSON string output
+        result_data = safe_json(response)
+        return [
+            types.TextContent(
+                type="text",
+                text=f"Object created successfully: {json.dumps(result_data)}"
+            )
+        ]
 
-        import json
         try:
             resp_json = response.json()
-        except json.JSONDecodeError:
-            if response.text.strip() == "":
-                resp_json = {}
-            else:
-                resp_json = {"error": "Malformed response",
-                             "raw": response.text}
         except Exception:
             resp_json = {}
         return [
@@ -1401,7 +1416,7 @@ async def handle_call_tool(
 
 async def main():
     # Run the server using stdin/stdout streams
-    async with devrev_mcp.server.stdio.stdio_server() as (read_stream, write_stream):
+    async with mcp.server.stdio.stdio_server() as (read_stream, write_stream):
         await server.run(
             read_stream,
             write_stream,

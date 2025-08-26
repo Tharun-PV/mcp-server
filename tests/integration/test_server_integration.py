@@ -25,12 +25,20 @@ def test_server_get_current_user_integration(monkeypatch):
 
     import threading
 
+    env = os.environ.copy()
+    env["DEVREV_API_KEY"] = "dummy_key"
+    env["MCP_TEST_MODE"] = "1"
+    env["PYTHONPATH"] = os.path.abspath(os.path.join(os.getcwd(), "src"))
+    # Suppress Python warnings to keep stdout clean
+    env["PYTHONWARNINGS"] = "ignore"
+
+    # Directly import and run the module to avoid module import issues
     proc = subprocess.Popen(
-        [sys.executable, "-m", "devrev_mcp.server"],
+        [sys.executable, "-c", "import devrev_mcp; devrev_mcp.main()"],
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        env={**os.environ, "DEVREV_API_KEY": "dummy_key", "MCP_TEST_MODE": "1"},
+        env=env,
         text=True
     )
 
