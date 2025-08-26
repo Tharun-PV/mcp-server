@@ -1,5 +1,9 @@
 # DevRev MCP Server
 
+[![codecov](https://codecov.io/gh/Tharun-PV/mcp-server/branch/main/graph/badge.svg)](https://codecov.io/gh/Tharun-PV/mcp-server)
+
+![Coverage Status](https://img.shields.io/badge/coverage--report-auto-green)
+
 ## Overview
 
 A Model Context Protocol server for DevRev. This server provides comprehensive access to DevRev's APIs, allowing you to manage work items (issues, tickets), parts (enhancements), meetings, workflow transitions, timeline entries, sprint planning, and subtypes. Access vista boards, search across your DevRev data, and retrieve user information with advanced filtering and pagination support.
@@ -7,26 +11,31 @@ A Model Context Protocol server for DevRev. This server provides comprehensive a
 ## Tools
 
 ### Search & Discovery
+
 - **`search`**: Search for information across DevRev using the hybrid search API with support for different namespaces (articles, issues, tickets, parts, dev_users, accounts, rev_orgs, vistas, incidents).
 - **`get_current_user`**: Fetch details about the currently authenticated DevRev user.
 - **`get_vista`**: Retrieve information about a vista (sprint board) in DevRev using its ID. Vistas contain sprints (vista group items) that can be used for filtering and sprint planning.
 
 ### Work Items (Issues & Tickets)
+
 - **`get_work`**: Get comprehensive information about a specific DevRev work item using its ID.
 - **`create_work`**: Create new issues or tickets in DevRev with specified properties like title, body, assignees, and associated parts.
 - **`update_work`**: Update existing work items by modifying properties such as title, body, assignees, associated parts, or stage transitions.
 - **`list_works`**: List and filter work items based on various criteria like state, dates, assignees, parts, and more.
 
 ### Parts (Enhancements)
+
 - **`get_part`**: Get detailed information about a specific part (enhancement) using its ID.
 - **`create_part`**: Create new parts (enhancements) with specified properties including name, description, assignees, and parent parts.
 - **`update_part`**: Update existing parts by modifying properties such as name, description, assignees, target dates, or stage transitions.
 - **`list_parts`**: List and filter parts based on various criteria like dates, assignees, parent parts, and more.
 
 ### Meetings & Communication
+
 - **`list_meetings`**: List and filter meetings in DevRev based on various criteria such as channel, participants, dates, and meeting states.
 
 ### Workflow Management
+
 - **`valid_stage_transition`**: Get a list of valid stage transitions for a given work item (issue, ticket) or part (enhancement). Use this before updating stages to ensure transitions are valid.
 - **`add_timeline_entry`**: Add timeline entries to work items (issues, tickets) or parts (enhancements) to track updates and progress.
 - **`get_sprints`**: Get active or planned sprints for a given part ID, useful for sprint planning and issue assignment.
@@ -41,11 +50,13 @@ Before using this MCP server, you need to install either `uvx` or `uv`, which ar
 `uv` is a fast Python package installer and resolver. It includes `uvx` for running Python applications.
 
 #### On macOS and Linux:
+
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
 #### On Windows:
+
 ```powershell
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
@@ -53,11 +64,13 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 #### Alternative Installation Methods:
 
 **Using Homebrew (macOS):**
+
 ```bash
 brew install uv
 ```
 
 **Using pip:**
+
 ```bash
 pip install uv
 ```
@@ -70,7 +83,7 @@ After installation, verify that `uv` and `uvx` are available:
 # Check uv version
 uv --version
 
-# Check uvx version  
+# Check uvx version
 uvx --version
 ```
 
@@ -79,6 +92,7 @@ Both commands should return version information. If you get "command not found" 
 ### Troubleshooting
 
 If you encounter issues:
+
 1. Restart your terminal after installation
 2. Check that the installation directory is in your PATH
 3. On macOS/Linux, the default installation adds uv to `~/.cargo/bin/`

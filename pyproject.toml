@@ -1,10 +1,13 @@
-[project]
+ [project]
 name = "devrev-mcp"
 version = "0.4.2"
 description = "A MCP server project"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = [ "mcp>=1.0.0", "requests"]
+dependencies = [
+	"mcp>=1.0.0",
+	"requests"
+]
 [[project.authors]]
 name = "Sunil Pandey"
 email = "sunil.pandey@devrev.ai"
@@ -15,3 +18,8 @@ build-backend = "hatchling.build"
 
 [project.scripts]
 devrev-mcp = "devrev_mcp:main"
+ 
+[tool.poetry.dev-dependencies]
+pytest = "^8.0.0"
+coverage = "^7.0.0"
+responses = "^0.25.0"
