@@ -4,13 +4,15 @@ from devrev_mcp import server
 
 
 @pytest.fixture(autouse=True)
-def set_api_key(monkeypatch):
+def setup_environment(monkeypatch):
+    """Set up test environment with API key."""
     monkeypatch.setenv("DEVREV_API_KEY", "test-api-key")
 
 
 @responses.activate
 @pytest.mark.asyncio
-async def test_handle_call_tool_list_meetings_success():
+async def test_list_meetings_success():
+    """Test list_meetings with valid arguments."""
     responses.add(
         responses.POST,
         "https://api.devrev.ai/meetings.list",
@@ -26,7 +28,8 @@ async def test_handle_call_tool_list_meetings_success():
 
 @responses.activate
 @pytest.mark.asyncio
-async def test_handle_call_tool_list_meetings_error():
+async def test_list_meetings_api_error():
+    """Test list_meetings with API error response."""
     responses.add(
         responses.POST,
         "https://api.devrev.ai/meetings.list",
@@ -42,7 +45,8 @@ async def test_handle_call_tool_list_meetings_error():
 
 @responses.activate
 @pytest.mark.asyncio
-async def test_handle_call_tool_list_meetings_no_args():
+async def test_list_meetings_no_arguments():
+    """Test list_meetings with no arguments."""
     responses.add(
         responses.POST,
         "https://api.devrev.ai/meetings.list",
