@@ -4,13 +4,15 @@ from devrev_mcp import server
 
 
 @pytest.fixture(autouse=True)
-def set_api_key(monkeypatch):
+def setup_environment(monkeypatch):
+    """Set up test environment with API key."""
     monkeypatch.setenv("DEVREV_API_KEY", "test-api-key")
 
 
 @responses.activate
 @pytest.mark.asyncio
-async def test_handle_call_tool_update_part_success():
+async def test_update_part_success():
+    """Test update_part with valid arguments."""
     responses.add(
         responses.POST,
         "https://api.devrev.ai/parts.update",
@@ -32,7 +34,8 @@ async def test_handle_call_tool_update_part_success():
 
 @responses.activate
 @pytest.mark.asyncio
-async def test_handle_call_tool_update_part_error():
+async def test_update_part_api_error():
+    """Test update_part with API error response."""
     responses.add(
         responses.POST,
         "https://api.devrev.ai/parts.update",
@@ -51,20 +54,23 @@ async def test_handle_call_tool_update_part_error():
 
 @responses.activate
 @pytest.mark.asyncio
-async def test_handle_call_tool_update_part_missing_args():
+async def test_update_part_missing_arguments():
+    """Test update_part with missing arguments."""
     with pytest.raises(ValueError, match="Missing arguments"):
         await server.handle_call_tool(name="update_part", arguments=None)
 
 
 @responses.activate
 @pytest.mark.asyncio
-async def test_handle_call_tool_update_part_missing_id():
+async def test_update_part_missing_id():
+    """Test update_part with missing id parameter."""
     with pytest.raises(ValueError, match="Missing id parameter"):
         await server.handle_call_tool(name="update_part", arguments={"type": "enhancement"})
 
 
 @responses.activate
 @pytest.mark.asyncio
-async def test_handle_call_tool_update_part_missing_type():
+async def test_update_part_missing_type():
+    """Test update_part with missing type parameter."""
     with pytest.raises(ValueError, match="Missing type parameter"):
         await server.handle_call_tool(name="update_part", arguments={"id": "part_2"})

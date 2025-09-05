@@ -1,17 +1,18 @@
 import pytest
+import responses
 from devrev_mcp import server
 
 
-@pytest.mark.asyncio
-async def test_handle_call_tool_list_works_payload_branches(monkeypatch):
-    # Covers payload construction for list_works with all optional fields
-    class Resp:
-        status_code = 200
+@pytest.fixture(autouse=True)
+def setup_environment(monkeypatch):
+    """Set up test environment with API key."""
+    monkeypatch.setenv("DEVREV_API_KEY", "test-api-key")
 
-        def json(self):
-            return {"works": []}
-    monkeypatch.setattr(server, "make_devrev_request", lambda *a, **kw: Resp())
-    arguments = {
+
+@pytest.fixture
+def complex_list_works_arguments():
+    """Complex arguments for list_works testing."""
+    return {
         "type": ["issue", "ticket"],
         "cursor": {"next_cursor": "abc", "mode": "after"},
         "applies_to_part": ["part_1"],
@@ -32,20 +33,12 @@ async def test_handle_call_tool_list_works_payload_branches(monkeypatch):
         "modified_date": {"after": "2025-01-01T00:00:00Z", "before": "2025-12-31T00:00:00Z"},
         "sprint": ["sprint_1"]
     }
-    result = await server.handle_call_tool(name="list_works", arguments=arguments)
-    assert any("Works listed successfully" in c.text for c in result)
 
 
-@pytest.mark.asyncio
-async def test_handle_call_tool_list_parts_payload_branches(monkeypatch):
-    # Covers payload construction for list_parts with all optional fields
-    class Resp:
-        status_code = 200
-
-        def json(self):
-            return {"parts": []}
-    monkeypatch.setattr(server, "make_devrev_request", lambda *a, **kw: Resp())
-    arguments = {
+@pytest.fixture
+def complex_list_parts_arguments():
+    """Complex arguments for list_parts testing."""
+    return {
         "type": "enhancement",
         "cursor": {"next_cursor": "abc", "mode": "after"},
         "owned_by": ["user_1"],
@@ -59,5 +52,31 @@ async def test_handle_call_tool_list_parts_payload_branches(monkeypatch):
         "actual_close_date": {"after": "2025-01-01T00:00:00Z", "before": "2025-12-31T00:00:00Z"},
         "actual_start_date": {"after": "2025-01-01T00:00:00Z", "before": "2025-12-31T00:00:00Z"}
     }
-    result = await server.handle_call_tool(name="list_parts", arguments=arguments)
+
+
+@responses.activate
+@pytest.mark.asyncio
+async def test_list_works_complex_payload(complex_list_works_arguments):
+    """Test list_works with complex payload including all optional fields."""
+    responses.add(
+        responses.POST,
+        "https://api.devrev.ai/works.list",
+        json={"works": []},
+        status=200
+    )
+    result = await server.handle_call_tool(name="list_works", arguments=complex_list_works_arguments)
+    assert any("Works listed successfully" in c.text for c in result)
+
+
+@responses.activate
+@pytest.mark.asyncio
+async def test_list_parts_complex_payload(complex_list_parts_arguments):
+    """Test list_parts with complex payload including all optional fields."""
+    responses.add(
+        responses.POST,
+        "https://api.devrev.ai/parts.list",
+        json={"parts": []},
+        status=200
+    )
+    result = await server.handle_call_tool(name="list_parts", arguments=complex_list_parts_arguments)
     assert any("Parts listed successfully" in c.text for c in result)

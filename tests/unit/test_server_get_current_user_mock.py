@@ -1,17 +1,38 @@
 import pytest
+import responses
 from devrev_mcp import server
 
 
-@pytest.mark.asyncio
-async def test_handle_call_tool_get_current_user_mock(monkeypatch):
-    # Mock the DevRev API response for get_current_user
-    class MockResponse:
-        status_code = 200
-        text = '{"user": "mocked_user"}'
+@pytest.fixture(autouse=True)
+def setup_environment(monkeypatch):
+    """Set up test environment with required environment variables."""
+    monkeypatch.setenv("DEVREV_API_KEY", "test-api-key")
 
-        def json(self):
-            return {"user": "mocked_user"}
-    monkeypatch.setattr(server, "make_devrev_request",
-                        lambda *a, **kw: MockResponse())
-    result = await server.handle_call_tool(name="get_current_user", arguments={})
-    assert any("mocked_user" in c.text for c in result)
+
+@responses.activate
+@pytest.mark.asyncio
+async def test_get_current_user_success():
+    """Test successful current user retrieval."""
+    expected_response = {
+        "user": {
+            "id": "user_123",
+            "name": "Test User",
+            "email": "test@example.com"
+        }
+    }
+    
+    responses.add(
+        responses.POST,
+        "https://api.devrev.ai/dev-users.self",
+        json=expected_response,
+        status=200
+    )
+
+    result = await server.handle_call_tool(
+        name="get_current_user",
+        arguments={}
+    )
+
+    assert len(result) == 1
+    assert result[0].type == "text"
+    assert "Current DevRev user details" in result[0].text
